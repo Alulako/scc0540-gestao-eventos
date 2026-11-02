@@ -61,7 +61,7 @@ O modelo local pode produzir SQL incorreto; o aplicativo apresenta a consulta ge
 
 ## Homologação de 02/11/2026
 
-**Para quem nunca usou Git:** começar pela seção 0 de `TESTE_EM_OUTRAS_MAQUINAS.md`, que ensina a instalar o Git, clonar o repositório e preparar os ZIPs no PowerShell. O roteiro completo está nesse arquivo, com scripts em `apoio_homologacao/` e distribuição separada em `Apoio-Homologacao.zip`. Relatórios e evidências de execução ficam na pasta de auditoria local, fora do repositório. O ZIP oficial e os componentes aprovados permanecem idênticos; o apoio não entra na submissão de 03/11. Testes nos PCs dos integrantes e o aceite da legibilidade em página inteira ainda dependem da revisão presencial.
+**Para quem nunca usou Git ou Ollama:** começar pelas seções 0 e 1 de `TESTE_EM_OUTRAS_MAQUINAS.md`, que ensinam a instalar o Git, clonar o repositório, baixar o Ollama e o modelo `qwen2.5-coder:1.5b`, verificar a API local e preparar os ZIPs no PowerShell. O roteiro completo está nesse arquivo, com scripts em `apoio_homologacao/` e distribuição separada em `Apoio-Homologacao.zip`. Relatórios e evidências de execução ficam na pasta de auditoria local, fora do repositório. O ZIP oficial e os componentes aprovados permanecem idênticos; o apoio não entra na submissão de 03/11. Testes nos PCs dos integrantes e o aceite da legibilidade em página inteira ainda dependem da revisão presencial.
 
 ## Integrantes
 

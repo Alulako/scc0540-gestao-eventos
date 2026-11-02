@@ -55,15 +55,39 @@ Requisitos:
 
 1. Python **3.11+**, 64 bits; esta versão do projeto foi testada com Python 3.12.4. Se já houver versão compatível, reutilizá-la. Para instalar, usar [Python oficial para Windows](https://www.python.org/downloads/windows/). Com o Python Install Manager, `py install 3.12` instala um runtime da série usada nos testes; `py -3.12 --version` deve responder. Com o instalador tradicional, instalar o launcher e o pip. Não substituir uma instalação existente para seguir o roteiro. [Documentação oficial](https://docs.python.org/3/using/windows.html).
 2. PostgreSQL: baseline testada na versão 18. Se não houver servidor, usar o [instalador indicado pelo PostgreSQL](https://www.postgresql.org/download/windows/), incluindo servidor e ferramentas de linha de comando; pgAdmin é opcional. Anotar porta e usuário locais. Guardar a senha localmente; não colocar senha em comando, print, captura ou mensagem do grupo. O usuário precisa de `CREATEDB` para a carga automatizada. Não alterar serviços ou bases preexistentes.
-3. [Ollama para Windows](https://ollama.com/download/windows), executando localmente. Abrir o aplicativo e, em PowerShell, executar:
+3. **Ollama + modelo Qwen (obrigatório para testar a IA):**
+   1. Acesse **https://ollama.com/download/windows**, baixe o instalador para Windows e conclua a instalação. Abra o aplicativo Ollama pelo menu Iniciar. Ele funciona **localmente**; não é necessário criar conta em serviços de IA.
+   2. **Feche e reabra o PowerShell** após a instalação. Verifique:
+      
+      ```powershell
+      ollama --version
+      ```
 
-   ```powershell
-   ollama --version
-   ollama pull qwen2.5-coder:1.5b
-   ollama list
-   ```
+      Se aparecer que `ollama` não é reconhecido, confira a instalação, abra o Ollama pelo menu Iniciar e reabra o PowerShell. Não continue enquanto o comando não funcionar.
+   3. **Baixe exatamente o modelo usado no projeto** (cerca de 1 GB de download; exige Internet):
+      
+      ```powershell
+      ollama pull qwen2.5-coder:1.5b
+      ```
 
-   O modelo precisa aparecer na lista. O aplicativo normalmente atende em `http://localhost:11434`; se já estiver rodando, não iniciar outro servidor na mesma porta. Se estiver usando somente o binário de linha de comando, `ollama serve` deve permanecer aberto em outro terminal. [Documentação Windows](https://docs.ollama.com/windows) e [consulta de modelos pela API](https://docs.ollama.com/api/tags).
+      Aguarde a conclusão do download. **Não baixe somente `qwen2.5-coder` sem `:1.5b`**, pois isso seleciona outro tamanho de modelo.
+   4. Confira se o modelo realmente foi instalado e faça uma pergunta curta:
+      
+      ```powershell
+      ollama list
+      ollama run qwen2.5-coder:1.5b "Responda apenas OK"
+      ```
+
+      `ollama list` deve mostrar `qwen2.5-coder:1.5b`; o segundo comando deve retornar uma resposta (o texto pode variar). Se entrar no modo de conversa, digite `/bye` para sair. Uma resposta aqui não substitui os testes do protótipo nas seções 7–8.
+   5. **Verifique o servidor da API**, que o Python precisa acessar:
+      
+      ```powershell
+      Invoke-RestMethod -Uri 'http://localhost:11434/api/tags' -Method Get | Select-Object -ExpandProperty models | Select-Object name
+      ```
+
+      O resultado deve conter o mesmo modelo. Se der erro de conexão, abra o Ollama pelo menu Iniciar e repita. Em instalações apenas de linha de comando, execute `ollama serve` em um **segundo PowerShell** e mantenha essa janela aberta; **não execute outro `ollama serve` se o Ollama já estiver funcionando**.
+
+   Links oficiais: [instalação no Windows](https://docs.ollama.com/windows), [modelo específico qwen2.5-coder:1.5b](https://ollama.com/library/qwen2.5-coder:1.5b) e [API de modelos](https://docs.ollama.com/api/tags). O modelo permanece no computador; as perguntas dos testes devem ser processadas localmente.
 
 Instalar dependências e baixar o modelo hoje. O desempenho de geração depende do hardware; a presença do modelo na lista não prova que ele consegue gerar SQL dentro do timeout de 180 segundos do protótipo. Não usar modelo de nuvem na demonstração.
 
