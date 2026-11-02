@@ -58,21 +58,21 @@ Requisitos:
 3. **Ollama + modelo Qwen (obrigatório para testar a IA):**
    1. Acesse **https://ollama.com/download/windows**, baixe o instalador para Windows e conclua a instalação. Abra o aplicativo Ollama pelo menu Iniciar. Ele funciona **localmente**; não é necessário criar conta em serviços de IA.
    2. **Feche e reabra o PowerShell** após a instalação. Verifique:
-      
+
       ```powershell
       ollama --version
       ```
 
       Se aparecer que `ollama` não é reconhecido, confira a instalação, abra o Ollama pelo menu Iniciar e reabra o PowerShell. Não continue enquanto o comando não funcionar.
    3. **Baixe exatamente o modelo usado no projeto** (cerca de 1 GB de download; exige Internet):
-      
+
       ```powershell
       ollama pull qwen2.5-coder:1.5b
       ```
 
       Aguarde a conclusão do download. **Não baixe somente `qwen2.5-coder` sem `:1.5b`**, pois isso seleciona outro tamanho de modelo.
    4. Confira se o modelo realmente foi instalado e faça uma pergunta curta:
-      
+
       ```powershell
       ollama list
       ollama run qwen2.5-coder:1.5b "Responda apenas OK"
@@ -80,7 +80,7 @@ Requisitos:
 
       `ollama list` deve mostrar `qwen2.5-coder:1.5b`; o segundo comando deve retornar uma resposta (o texto pode variar). Se entrar no modo de conversa, digite `/bye` para sair. Uma resposta aqui não substitui os testes do protótipo nas seções 7–8.
    5. **Verifique o servidor da API**, que o Python precisa acessar:
-      
+
       ```powershell
       Invoke-RestMethod -Uri 'http://localhost:11434/api/tags' -Method Get | Select-Object -ExpandProperty models | Select-Object name
       ```
