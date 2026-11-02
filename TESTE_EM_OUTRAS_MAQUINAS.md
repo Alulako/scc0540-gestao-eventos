@@ -4,6 +4,49 @@ A entrega oficial BSI é em **03/11/2026**. Este roteiro e `apoio_homologacao/` 
 
 Integrantes: Ana Luíza, Mônica, Gabriel, Larissa e Ana Araújo. O grupo informou não ter identificador; não preencher nomes completos, matrículas ou números de grupo inventados. Os campos de NUSP da avaliação individual pertencem a outro documento, não à instalação deste projeto.
 
+## 0. Primeiro acesso: clonar o GitHub, mesmo sem conhecer Git
+
+**Faça esta seção ANTES das seções 1 e 2.** O objetivo é baixar uma cópia do repositório e colocar os dois ZIPs na pasta Downloads para seguir os comandos de teste sem mudar nada.
+
+1. **Instale o Git para Windows**, se ainda não tiver: https://git-scm.com/downloads/win . Aceite as opções padrão do instalador e feche/reabra o terminal ao terminar.
+2. Abra **PowerShell** pelo menu Iniciar do Windows (pesquise `PowerShell`; não precisa executar como administrador).
+3. Copie **uma linha de cada vez**, pressionando Enter. Na primeira vez, use este bloco:
+
+   ```powershell
+   git --version
+   Set-Location (Join-Path $env:USERPROFILE 'Downloads')
+   git clone https://github.com/Alulako/scc0540-gestao-eventos.git
+   Set-Location .\scc0540-gestao-eventos
+   git status -sb
+   Get-Item .\Entrega-BD.zip, .\Apoio-Homologacao.zip, .\TESTE_EM_OUTRAS_MAQUINAS.md
+   Copy-Item -LiteralPath .\Entrega-BD.zip, .\Apoio-Homologacao.zip -Destination ..
+   Set-Location ..
+   Get-Item .\Entrega-BD.zip, .\Apoio-Homologacao.zip
+   ```
+
+4. **Confira o resultado**:
+   - `git --version` mostra a versão instalada. Se disser que `git` não é reconhecido, instale o Git e reabra o PowerShell antes de continuar.
+   - `git clone` baixa a pasta `scc0540-gestao-eventos` para Downloads. Não é necessário criar branches, fazer commits ou configurar uma conta Git local.
+   - `git status -sb` normalmente mostra `## main...origin/main`. Não deve apresentar arquivos modificados.
+   - Os últimos comandos conferem os arquivos e **copiam** `Entrega-BD.zip` e `Apoio-Homologacao.zip` para a pasta Downloads, **sem mover ou alterar** os originais.
+5. **Se já clonou anteriormente**, NÃO repita `git clone` na mesma pasta (isso causa o erro `destination path already exists`). Para atualizar a cópia, use:
+
+   ```powershell
+   Set-Location (Join-Path $env:USERPROFILE 'Downloads\scc0540-gestao-eventos')
+   git pull --ff-only origin main
+   git status -sb
+   Copy-Item -LiteralPath .\Entrega-BD.zip, .\Apoio-Homologacao.zip -Destination (Join-Path $env:USERPROFILE 'Downloads') -Force
+   ```
+
+   Esse segundo bloco presume que ninguém editou os arquivos dentro do repositório. **Edite `config.json` somente na cópia extraída na seção 2**, nunca na pasta clonada; assim será possível atualizar a cópia sem conflitos.
+
+**Problemas comuns:**
+- `fatal: repository not found` ou pedido de permissão: confira o link e peça acesso ao repositório se for privado. Não compartilhe senha ou token no grupo.
+- `destination path ... already exists`: use o bloco `git pull` acima, não apague a pasta.
+- `Get-Item` diz que falta um dos dois ZIPs: a clonagem não terminou corretamente; não continue os testes até encontrar ambos.
+
+**Pronto:** os dois ZIPs estão em Downloads. Siga as seções 1 (pré-requisitos) e 2 (extração em pasta limpa); as seções 3–10 ensinam os testes. **Não use `git push`, `git add` ou `git commit` para esta homologação.**
+
 ## 1. Preparar hoje, antes de ficar sem Internet
 
 Levar `Entrega-BD.zip` e `Apoio-Homologacao.zip`. O segundo contém este roteiro, os dois scripts de apoio e o manifesto dos arquivos aprovados. Nunca enviar o segundo ZIP ao professor. Não levar `.venv`, `.local`, bases da Ana nem configurações pessoais como substitutos da instalação.
