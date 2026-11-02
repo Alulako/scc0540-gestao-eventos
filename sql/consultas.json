@@ -1,0 +1,22 @@
+[
+  {
+    "objetivo": "Listar a programacao completa de cada edicao, com local e ministrantes por sessao.",
+    "sql": "SELECT e.id AS evento_id, e.nome, e.edicao, a.titulo, s.id AS sessao_id, s.inicio, s.fim, ep.nome AS espaco, s.requer_inscricao, coalesce(string_agg(p.nome || ' (' || ps.papel || ')', ', ' ORDER BY p.nome, ps.papel), 'Sem ministrante') AS ministrantes\nFROM evento e JOIN atividade a ON a.evento_id = e.id\nJOIN sessao s ON s.atividade_id = a.id JOIN espaco ep ON ep.id = s.espaco_id\nLEFT JOIN papel_sessao ps ON ps.sessao_id = s.id LEFT JOIN pessoa p ON p.id = ps.pessoa_id\nGROUP BY e.id, a.id, s.id, ep.id ORDER BY e.id, s.inicio, s.id;"
+  },
+  {
+    "objetivo": "Mostrar confirmacoes, lista de espera e vagas disponiveis nas sessoes de inscricao especifica.",
+    "sql": "SELECT s.id AS sessao_id, a.titulo, coalesce(s.limite_vagas, ep.capacidade) AS lotacao,\ncount(i.pessoa_id) FILTER (WHERE i.status = 'confirmada') AS confirmados,\ncount(i.pessoa_id) FILTER (WHERE i.status = 'espera') AS em_espera,\ncoalesce(s.limite_vagas, ep.capacidade) - count(i.pessoa_id) FILTER (WHERE i.status = 'confirmada') AS vagas_livres\nFROM sessao s JOIN atividade a ON a.id = s.atividade_id JOIN espaco ep ON ep.id = s.espaco_id\nLEFT JOIN inscricao_sessao i ON i.sessao_id = s.id WHERE s.requer_inscricao\nGROUP BY s.id, a.titulo, ep.capacidade ORDER BY vagas_livres, s.id;"
+  },
+  {
+    "objetivo": "Encontrar pessoas confirmadas em todas as sessoes de inscricao especifica de um evento que possua ao menos uma dessas sessoes.",
+    "sql": "SELECT e.id AS evento_id, e.nome AS evento, p.id AS pessoa_id, p.nome\nFROM evento e JOIN inscricao_evento ie ON ie.evento_id = e.id AND ie.status = 'confirmada'\nJOIN pessoa p ON p.id = ie.pessoa_id\nWHERE EXISTS (SELECT 1 FROM atividade a JOIN sessao s ON s.atividade_id = a.id WHERE a.evento_id = e.id AND s.requer_inscricao)\nAND NOT EXISTS (SELECT 1 FROM atividade a JOIN sessao s ON s.atividade_id = a.id\nWHERE a.evento_id = e.id AND s.requer_inscricao\nAND NOT EXISTS (SELECT 1 FROM inscricao_sessao i WHERE i.sessao_id = s.id AND i.pessoa_id = p.id AND i.status = 'confirmada'))\nORDER BY e.id, p.id;"
+  },
+  {
+    "objetivo": "Classificar as tres sessoes de inscricao especifica com maior taxa de ocupacao da lotacao efetiva por evento, com desempate pelo id.",
+    "sql": "WITH ocupacao AS (\nSELECT a.evento_id, s.id AS sessao_id, a.titulo, count(i.pessoa_id) AS confirmados,\ncoalesce(s.limite_vagas, ep.capacidade) AS lotacao,\ncount(i.pessoa_id)::numeric / coalesce(s.limite_vagas, ep.capacidade) AS taxa\nFROM sessao s JOIN atividade a ON a.id = s.atividade_id JOIN espaco ep ON ep.id = s.espaco_id\nLEFT JOIN inscricao_sessao i ON i.sessao_id = s.id AND i.status = 'confirmada'\nWHERE s.requer_inscricao GROUP BY a.evento_id, s.id, a.titulo, ep.capacidade\n), ranking AS (\nSELECT *, row_number() OVER (PARTITION BY evento_id ORDER BY taxa DESC, sessao_id) AS posicao FROM ocupacao\n) SELECT * FROM ranking WHERE posicao <= 3 ORDER BY evento_id, posicao;"
+  },
+  {
+    "objetivo": "Consultar a trilha de reagendamentos de cada sessao com os locais anteriores e novos e o total acumulado de alteracoes.",
+    "sql": "SELECT e.nome AS evento, a.titulo, h.sessao_id, h.alterado_em, h.inicio_anterior, h.inicio_novo,\nep1.nome AS espaco_anterior, ep2.nome AS espaco_novo,\nrow_number() OVER (PARTITION BY h.sessao_id ORDER BY h.alterado_em, h.id) AS numero_da_mudanca\nFROM historico_sessao h JOIN sessao s ON s.id = h.sessao_id\nJOIN atividade a ON a.id = s.atividade_id JOIN evento e ON e.id = a.evento_id\nJOIN espaco ep1 ON ep1.id = h.espaco_anterior JOIN espaco ep2 ON ep2.id = h.espaco_novo\nORDER BY h.sessao_id, h.alterado_em, h.id;"
+  }
+]

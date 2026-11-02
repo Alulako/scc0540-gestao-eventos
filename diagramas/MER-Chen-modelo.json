@@ -1,0 +1,677 @@
+{
+  "nodes": {
+    "e_pessoa": {
+      "kind": "entity",
+      "label": "Pessoa",
+      "table": "pessoa",
+      "shape": "box"
+    },
+    "a_pessoa_id": {
+      "kind": "attribute",
+      "label": "id_pessoa",
+      "shape": "ellipse",
+      "key": true,
+      "table": "pessoa",
+      "column": "id"
+    },
+    "a_pessoa_nome": {
+      "kind": "attribute",
+      "label": "nome",
+      "shape": "ellipse",
+      "key": false,
+      "table": "pessoa",
+      "column": "nome"
+    },
+    "e_promotor": {
+      "kind": "entity",
+      "label": "Promotor",
+      "table": "promotor",
+      "shape": "box"
+    },
+    "a_promotor_id": {
+      "kind": "attribute",
+      "label": "id_promotor",
+      "shape": "ellipse",
+      "key": true,
+      "table": "promotor",
+      "column": "id"
+    },
+    "a_promotor_organizacao": {
+      "kind": "attribute",
+      "label": "organização [opcional]",
+      "shape": "ellipse",
+      "key": false,
+      "table": "promotor",
+      "column": "organizacao"
+    },
+    "e_evento": {
+      "kind": "entity",
+      "label": "Evento",
+      "table": "evento",
+      "shape": "box"
+    },
+    "a_evento_id": {
+      "kind": "attribute",
+      "label": "id_evento",
+      "shape": "ellipse",
+      "key": true,
+      "table": "evento",
+      "column": "id"
+    },
+    "a_evento_nome": {
+      "kind": "attribute",
+      "label": "nome",
+      "shape": "ellipse",
+      "key": false,
+      "table": "evento",
+      "column": "nome"
+    },
+    "a_evento_edicao": {
+      "kind": "attribute",
+      "label": "edição",
+      "shape": "ellipse",
+      "key": false,
+      "table": "evento",
+      "column": "edicao"
+    },
+    "e_atividade": {
+      "kind": "entity",
+      "label": "Atividade",
+      "table": "atividade",
+      "shape": "box"
+    },
+    "a_atividade_id": {
+      "kind": "attribute",
+      "label": "id_atividade",
+      "shape": "ellipse",
+      "key": true,
+      "table": "atividade",
+      "column": "id"
+    },
+    "a_atividade_titulo": {
+      "kind": "attribute",
+      "label": "título",
+      "shape": "ellipse",
+      "key": false,
+      "table": "atividade",
+      "column": "titulo"
+    },
+    "e_sessao": {
+      "kind": "entity",
+      "label": "Sessão",
+      "table": "sessao",
+      "shape": "box"
+    },
+    "a_sessao_id": {
+      "kind": "attribute",
+      "label": "id_sessao",
+      "shape": "ellipse",
+      "key": true,
+      "table": "sessao",
+      "column": "id"
+    },
+    "a_sessao_requer_inscricao": {
+      "kind": "attribute",
+      "label": "requer_inscrição",
+      "shape": "ellipse",
+      "key": false,
+      "table": "sessao",
+      "column": "requer_inscricao"
+    },
+    "a_sessao_limite_vagas": {
+      "kind": "attribute",
+      "label": "limite_vagas [opcional]",
+      "shape": "ellipse",
+      "key": false,
+      "table": "sessao",
+      "column": "limite_vagas"
+    },
+    "e_espaco": {
+      "kind": "entity",
+      "label": "Espaço",
+      "table": "espaco",
+      "shape": "box"
+    },
+    "a_espaco_id": {
+      "kind": "attribute",
+      "label": "id_espaco",
+      "shape": "ellipse",
+      "key": true,
+      "table": "espaco",
+      "column": "id"
+    },
+    "a_espaco_capacidade": {
+      "kind": "attribute",
+      "label": "capacidade",
+      "shape": "ellipse",
+      "key": false,
+      "table": "espaco",
+      "column": "capacidade"
+    },
+    "e_historico_sessao": {
+      "kind": "entity",
+      "label": "HistóricoSessão",
+      "table": "historico_sessao",
+      "shape": "box"
+    },
+    "a_historico_sessao_id": {
+      "kind": "attribute",
+      "label": "id_historico",
+      "shape": "ellipse",
+      "key": true,
+      "table": "historico_sessao",
+      "column": "id"
+    },
+    "r_identifica": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Identifica",
+      "mapping": "promotor.pessoa_id UNIQUE; XOR com organizacao"
+    },
+    "r_promove": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Promove",
+      "mapping": "promove"
+    },
+    "r_oferece": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Oferece",
+      "mapping": "atividade.evento_id"
+    },
+    "r_realiza": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Realiza",
+      "mapping": "sessao.atividade_id"
+    },
+    "r_ocupa": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Ocupa",
+      "mapping": "sessao.espaco_id"
+    },
+    "r_registra": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Registra",
+      "mapping": "historico_sessao.sessao_id"
+    },
+    "r_anterior": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Local anterior",
+      "mapping": "historico_sessao.espaco_anterior"
+    },
+    "r_novo": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Local novo",
+      "mapping": "historico_sessao.espaco_novo"
+    },
+    "r_inscricao_evento": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Inscreve no evento",
+      "mapping": "inscricao_evento"
+    },
+    "a_inscricao_evento_status": {
+      "kind": "attribute",
+      "label": "status",
+      "shape": "ellipse",
+      "key": false,
+      "table": "inscricao_evento",
+      "column": "status"
+    },
+    "r_inscricao_sessao": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Inscreve na sessão",
+      "mapping": "inscricao_sessao"
+    },
+    "a_inscricao_sessao_status": {
+      "kind": "attribute",
+      "label": "status",
+      "shape": "ellipse",
+      "key": false,
+      "table": "inscricao_sessao",
+      "column": "status"
+    },
+    "r_organiza": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Organiza",
+      "mapping": "papel_evento WHERE papel='organizador'"
+    },
+    "r_colabora": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Colabora",
+      "mapping": "papel_evento WHERE papel='colaborador'"
+    },
+    "r_palestra": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Palestra",
+      "mapping": "papel_sessao WHERE papel='palestrante'"
+    },
+    "r_instrui": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Instrui",
+      "mapping": "papel_sessao WHERE papel='instrutor'"
+    },
+    "r_modera": {
+      "kind": "relationship",
+      "shape": "diamond",
+      "label": "Modera",
+      "mapping": "papel_sessao WHERE papel='moderador'"
+    }
+  },
+  "edges": [
+    {
+      "id": "attr_a_pessoa_id",
+      "source": "e_pessoa",
+      "target": "a_pessoa_id",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_pessoa_nome",
+      "source": "e_pessoa",
+      "target": "a_pessoa_nome",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_promotor_id",
+      "source": "e_promotor",
+      "target": "a_promotor_id",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_promotor_organizacao",
+      "source": "e_promotor",
+      "target": "a_promotor_organizacao",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_evento_id",
+      "source": "e_evento",
+      "target": "a_evento_id",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_evento_nome",
+      "source": "e_evento",
+      "target": "a_evento_nome",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_evento_edicao",
+      "source": "e_evento",
+      "target": "a_evento_edicao",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_atividade_id",
+      "source": "e_atividade",
+      "target": "a_atividade_id",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_atividade_titulo",
+      "source": "e_atividade",
+      "target": "a_atividade_titulo",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_sessao_id",
+      "source": "e_sessao",
+      "target": "a_sessao_id",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_sessao_requer_inscricao",
+      "source": "e_sessao",
+      "target": "a_sessao_requer_inscricao",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_sessao_limite_vagas",
+      "source": "e_sessao",
+      "target": "a_sessao_limite_vagas",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_espaco_id",
+      "source": "e_espaco",
+      "target": "a_espaco_id",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_espaco_capacidade",
+      "source": "e_espaco",
+      "target": "a_espaco_capacidade",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "attr_a_historico_sessao_id",
+      "source": "e_historico_sessao",
+      "target": "a_historico_sessao_id",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "identifica_a",
+      "source": "e_pessoa",
+      "target": "r_identifica",
+      "kind": "participation",
+      "entity": "e_pessoa",
+      "cardinality": "1",
+      "total": false
+    },
+    {
+      "id": "identifica_b",
+      "source": "r_identifica",
+      "target": "e_promotor",
+      "kind": "participation",
+      "entity": "e_promotor",
+      "cardinality": "1",
+      "total": false
+    },
+    {
+      "id": "promove_a",
+      "source": "e_promotor",
+      "target": "r_promove",
+      "kind": "participation",
+      "entity": "e_promotor",
+      "cardinality": "N",
+      "total": false
+    },
+    {
+      "id": "promove_b",
+      "source": "r_promove",
+      "target": "e_evento",
+      "kind": "participation",
+      "entity": "e_evento",
+      "cardinality": "M",
+      "total": false
+    },
+    {
+      "id": "oferece_a",
+      "source": "e_evento",
+      "target": "r_oferece",
+      "kind": "participation",
+      "entity": "e_evento",
+      "cardinality": "1",
+      "total": false
+    },
+    {
+      "id": "oferece_b",
+      "source": "r_oferece",
+      "target": "e_atividade",
+      "kind": "participation",
+      "entity": "e_atividade",
+      "cardinality": "N",
+      "total": true
+    },
+    {
+      "id": "realiza_a",
+      "source": "e_atividade",
+      "target": "r_realiza",
+      "kind": "participation",
+      "entity": "e_atividade",
+      "cardinality": "1",
+      "total": false
+    },
+    {
+      "id": "realiza_b",
+      "source": "r_realiza",
+      "target": "e_sessao",
+      "kind": "participation",
+      "entity": "e_sessao",
+      "cardinality": "N",
+      "total": true
+    },
+    {
+      "id": "ocupa_a",
+      "source": "e_sessao",
+      "target": "r_ocupa",
+      "kind": "participation",
+      "entity": "e_sessao",
+      "cardinality": "N",
+      "total": true
+    },
+    {
+      "id": "ocupa_b",
+      "source": "r_ocupa",
+      "target": "e_espaco",
+      "kind": "participation",
+      "entity": "e_espaco",
+      "cardinality": "1",
+      "total": false
+    },
+    {
+      "id": "registra_a",
+      "source": "e_sessao",
+      "target": "r_registra",
+      "kind": "participation",
+      "entity": "e_sessao",
+      "cardinality": "1",
+      "total": false
+    },
+    {
+      "id": "registra_b",
+      "source": "r_registra",
+      "target": "e_historico_sessao",
+      "kind": "participation",
+      "entity": "e_historico_sessao",
+      "cardinality": "N",
+      "total": true
+    },
+    {
+      "id": "anterior_a",
+      "source": "e_historico_sessao",
+      "target": "r_anterior",
+      "kind": "participation",
+      "entity": "e_historico_sessao",
+      "cardinality": "N",
+      "total": true
+    },
+    {
+      "id": "anterior_b",
+      "source": "r_anterior",
+      "target": "e_espaco",
+      "kind": "participation",
+      "entity": "e_espaco",
+      "cardinality": "1",
+      "total": false
+    },
+    {
+      "id": "novo_a",
+      "source": "e_historico_sessao",
+      "target": "r_novo",
+      "kind": "participation",
+      "entity": "e_historico_sessao",
+      "cardinality": "N",
+      "total": true
+    },
+    {
+      "id": "novo_b",
+      "source": "r_novo",
+      "target": "e_espaco",
+      "kind": "participation",
+      "entity": "e_espaco",
+      "cardinality": "1",
+      "total": false
+    },
+    {
+      "id": "inscricao_evento_a",
+      "source": "e_pessoa",
+      "target": "r_inscricao_evento",
+      "kind": "participation",
+      "entity": "e_pessoa",
+      "cardinality": "N",
+      "total": false
+    },
+    {
+      "id": "inscricao_evento_b",
+      "source": "r_inscricao_evento",
+      "target": "e_evento",
+      "kind": "participation",
+      "entity": "e_evento",
+      "cardinality": "M",
+      "total": false
+    },
+    {
+      "id": "attr_a_inscricao_evento_status",
+      "source": "r_inscricao_evento",
+      "target": "a_inscricao_evento_status",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "inscricao_sessao_a",
+      "source": "e_pessoa",
+      "target": "r_inscricao_sessao",
+      "kind": "participation",
+      "entity": "e_pessoa",
+      "cardinality": "N",
+      "total": false
+    },
+    {
+      "id": "inscricao_sessao_b",
+      "source": "r_inscricao_sessao",
+      "target": "e_sessao",
+      "kind": "participation",
+      "entity": "e_sessao",
+      "cardinality": "M",
+      "total": false
+    },
+    {
+      "id": "attr_a_inscricao_sessao_status",
+      "source": "r_inscricao_sessao",
+      "target": "a_inscricao_sessao_status",
+      "kind": "attribute",
+      "total": false
+    },
+    {
+      "id": "organiza_a",
+      "source": "e_pessoa",
+      "target": "r_organiza",
+      "kind": "participation",
+      "entity": "e_pessoa",
+      "cardinality": "N",
+      "total": false
+    },
+    {
+      "id": "organiza_b",
+      "source": "r_organiza",
+      "target": "e_evento",
+      "kind": "participation",
+      "entity": "e_evento",
+      "cardinality": "M",
+      "total": false
+    },
+    {
+      "id": "colabora_a",
+      "source": "e_pessoa",
+      "target": "r_colabora",
+      "kind": "participation",
+      "entity": "e_pessoa",
+      "cardinality": "N",
+      "total": false
+    },
+    {
+      "id": "colabora_b",
+      "source": "r_colabora",
+      "target": "e_evento",
+      "kind": "participation",
+      "entity": "e_evento",
+      "cardinality": "M",
+      "total": false
+    },
+    {
+      "id": "palestra_a",
+      "source": "e_pessoa",
+      "target": "r_palestra",
+      "kind": "participation",
+      "entity": "e_pessoa",
+      "cardinality": "N",
+      "total": false
+    },
+    {
+      "id": "palestra_b",
+      "source": "r_palestra",
+      "target": "e_sessao",
+      "kind": "participation",
+      "entity": "e_sessao",
+      "cardinality": "M",
+      "total": false
+    },
+    {
+      "id": "instrui_a",
+      "source": "e_pessoa",
+      "target": "r_instrui",
+      "kind": "participation",
+      "entity": "e_pessoa",
+      "cardinality": "N",
+      "total": false
+    },
+    {
+      "id": "instrui_b",
+      "source": "r_instrui",
+      "target": "e_sessao",
+      "kind": "participation",
+      "entity": "e_sessao",
+      "cardinality": "M",
+      "total": false
+    },
+    {
+      "id": "modera_a",
+      "source": "e_pessoa",
+      "target": "r_modera",
+      "kind": "participation",
+      "entity": "e_pessoa",
+      "cardinality": "N",
+      "total": false
+    },
+    {
+      "id": "modera_b",
+      "source": "r_modera",
+      "target": "e_sessao",
+      "kind": "participation",
+      "entity": "e_sessao",
+      "cardinality": "M",
+      "total": false
+    }
+  ],
+  "entities": [
+    "pessoa",
+    "promotor",
+    "evento",
+    "atividade",
+    "sessao",
+    "espaco",
+    "historico_sessao"
+  ],
+  "notes": [
+    "Linha dupla: participacao total; simples: parcial; 1/N/M: cardinalidade maxima de Chen.",
+    "Promotor: Identifica OU organizacao preenchida, exclusivamente; identificacao individual opcional 1:1.",
+    "Papeis sao CRs distintos para permitir varios papeis simultaneos por par pessoa/contexto."
+  ]
+}

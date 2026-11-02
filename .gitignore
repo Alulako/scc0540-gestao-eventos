@@ -1,0 +1,35 @@
+# Dependências e ambientes locais
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.local/
+node_modules/
+.vscode/
+.idea/
+.env
+.env.*
+*.local.json
+*.bak
+*.log
+.DS_Store
+Thumbs.db
+
+# Arquivos de trabalho, rascunhos e testes locais
+backups/
+qa/
+docs/
+PROMPT_*.txt
+diagramas/ER-rascunho.drawio
+diagramas/ER-baseline.drawio
+
+# Material didático disponibilizado no Moodle
+01.Projeto-SCC0640-2026-2-Enunciado.pdf
+02.Projeto-SCC0640-2026-2-Avaliacao.pdf
+03.Projeto-SCC0640-2026-2-Python.pdf
+04.Projeto-SCC0640-2026-2-Treinamento.pdf
+Planejamento_BD.pdf
+SCC0540_BSI-2026-2-Cronograma.pdf
+VideoAulaOllama.txt
+NotebookExemploPythonIALocal.ipynb

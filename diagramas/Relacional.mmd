@@ -1,0 +1,98 @@
+---
+title: Gestão de Eventos e Espaços - Modelo Relacional
+---
+erDiagram
+    direction LR
+    pessoa {
+        bigint id PK "obrigatorio"
+        varchar(120) nome "obrigatorio"
+        varchar(254) email UK "obrigatorio"
+    }
+    promotor {
+        bigint id PK "obrigatorio"
+        bigint pessoa_id FK,UK "opcional"
+        varchar(160) organizacao "opcional"
+    }
+    evento {
+        bigint id PK "obrigatorio"
+        varchar(160) nome "obrigatorio"
+        integer edicao "obrigatorio"
+        timestamp inicio "obrigatorio"
+        timestamp fim "obrigatorio"
+    }
+    promove {
+        bigint promotor_id PK,FK "obrigatorio"
+        bigint evento_id PK,FK "obrigatorio"
+    }
+    espaco {
+        bigint id PK "obrigatorio"
+        varchar(120) nome UK "obrigatorio"
+        integer capacidade "obrigatorio"
+        text recursos "obrigatorio"
+    }
+    atividade {
+        bigint id PK "obrigatorio"
+        bigint evento_id FK "obrigatorio"
+        varchar(160) titulo "obrigatorio"
+        text descricao "obrigatorio"
+        varchar(25) tipo "obrigatorio"
+    }
+    sessao {
+        bigint id PK "obrigatorio"
+        bigint atividade_id FK "obrigatorio"
+        bigint espaco_id FK "obrigatorio"
+        timestamp inicio "obrigatorio"
+        timestamp fim "obrigatorio"
+        boolean requer_inscricao "obrigatorio"
+        integer limite_vagas "opcional"
+    }
+    inscricao_evento {
+        bigint pessoa_id PK,FK "obrigatorio"
+        bigint evento_id PK,FK "obrigatorio"
+        varchar(12) status "obrigatorio"
+        timestamptz inscrito_em "obrigatorio"
+    }
+    inscricao_sessao {
+        bigint pessoa_id PK,FK "obrigatorio"
+        bigint sessao_id PK,FK "obrigatorio"
+        varchar(12) status "obrigatorio"
+        timestamptz inscrito_em "obrigatorio"
+    }
+    papel_evento {
+        bigint pessoa_id PK,FK "obrigatorio"
+        bigint evento_id PK,FK "obrigatorio"
+        varchar(25) papel PK "obrigatorio"
+    }
+    papel_sessao {
+        bigint pessoa_id PK,FK "obrigatorio"
+        bigint sessao_id PK,FK "obrigatorio"
+        varchar(25) papel PK "obrigatorio"
+    }
+    historico_sessao {
+        bigint id PK "obrigatorio"
+        bigint sessao_id FK "obrigatorio"
+        timestamp inicio_anterior "obrigatorio"
+        timestamp fim_anterior "obrigatorio"
+        bigint espaco_anterior FK "obrigatorio"
+        timestamp inicio_novo "obrigatorio"
+        timestamp fim_novo "obrigatorio"
+        bigint espaco_novo FK "obrigatorio"
+        timestamptz alterado_em "obrigatorio"
+    }
+    pessoa |o..o| promotor : "pessoa promotora opcional e unica"
+    promotor ||--o{ promove : promove
+    evento ||--o{ promove : possui_promotores
+    evento ||..o{ atividade : oferece
+    atividade ||..o{ sessao : realiza
+    espaco ||..o{ sessao : recebe
+    pessoa ||--o{ inscricao_evento : inscreve
+    evento ||--o{ inscricao_evento : recebe
+    pessoa ||--o{ inscricao_sessao : inscreve
+    sessao ||--o{ inscricao_sessao : recebe
+    pessoa ||--o{ papel_evento : exerce
+    evento ||--o{ papel_evento : possui
+    pessoa ||--o{ papel_sessao : exerce
+    sessao ||--o{ papel_sessao : possui
+    sessao ||..o{ historico_sessao : registra
+    espaco ||..o{ historico_sessao : espaco_anterior
+    espaco ||..o{ historico_sessao : espaco_novo

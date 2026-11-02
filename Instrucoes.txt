@@ -1,0 +1,51 @@
+INTEGRANTES: Ana Luíza, Mônica, Gabriel, Larissa e Ana Araújo.
+
+SOFTWARE
+Python 3.11+, PostgreSQL 18 (versao testada), Ollama local.
+Dependencias: ollama e psycopg[binary], pelo requirements.txt.
+
+CRIACAO DO BANCO
+Crie base NOVA: createdb -h localhost -U postgres eventos
+Copie de Projeto.txt somente o SQL entre 3. DDL COMPLETO e 4. CONSULTAS,
+sem divisorias de sinais de igual. Salve como ddl-extraido.sql e execute:
+psql -X -h localhost -U postgres -d eventos -v ON_ERROR_STOP=1 -f ddl-extraido.sql
+O DDL inclui BEGIN/COMMIT, tabelas, indices, funcoes e triggers, sem extensoes.
+Nao executar sobre base ja populada. Programacao em horario local de Sao Paulo.
+Escritas relacionadas a vagas/programacao exigem READ COMMITTED (padrao).
+
+DADOS
+Execute uma vez apos o DDL:
+psql -X -h localhost -U postgres -d eventos -v ON_ERROR_STOP=1 -f DML.sql
+Dados ficticios; o DML demonstra reagendamentos produzidos pelo trigger.
+
+PROTOTIPO
+Extraia Prototipo.zip em Prototipo e mantenha Projeto.txt no diretorio pai:
+ProjetoBD/Projeto.txt
+ProjetoBD/Prototipo/main.py
+ProjetoBD/Prototipo/config.json
+ProjetoBD/Prototipo/requirements.txt
+Em Prototipo:
+python -m pip install -r requirements.txt
+Edite SOMENTE config.json com host, porta, base, usuario e senha do PostgreSQL
+e host/model do Ollama. Os valores distribuidos sao exemplos.
+Execute exclusivamente: python main.py
+Menu 1-5: consultas do Projeto.txt; 6: pergunta em portugues; 7: testar conexao;
+0: sair. Erros de SQL/servicos sao mostrados e o menu continua.
+
+OLLAMA
+Inicie: ollama serve
+Em outro terminal: ollama pull qwen2.5-coder:1.5b
+Modelo configurado: qwen2.5-coder:1.5b. Biblioteca ollama, sem modelos de nuvem.
+Se a GPU desta maquina causar timeout, iniciar o servidor usando CPU:
+PowerShell: $env:CUDA_VISIBLE_DEVICES="-1"; $env:OLLAMA_VULKAN="0"; ollama serve
+Essas variaveis valem apenas nesse terminal. Nao mudar main.py.
+
+LIMITACOES
+Fila com promocao manual; sessoes abertas
+nao contam presenca. Recursos descritivos; sem choque de agenda de pessoas.
+Escritas serializadas reduzem paralelismo. Consultas exibem ate 200 linhas,
+timeout SQL 10s e Ollama 180s. SQL gerado pode estar errado; CLI mostra SQL
+e resultado/erro. Para uso externo, configurar usuario somente SELECT.
+Pergunta fora do dominio gerou coluna inexistente em teste real; o banco
+rejeitou a consulta e o erro foi tratado. Nao ha garantia de acerto semantico.
+FKs RESTRICT preservam referencias: cancelar inscricoes especificas antes da geral.
