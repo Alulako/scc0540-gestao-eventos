@@ -59,6 +59,10 @@ Ajuste somente o `config.json` para as informações do seu ambiente. Os valores
 
 O modelo local pode produzir SQL incorreto; o aplicativo apresenta a consulta gerada e o resultado ou erro correspondente. Para requisitos e limitações detalhados, consulte `Projeto.txt` e `Instrucoes.txt`.
 
+## Homologação de 02/11/2026
+
+O roteiro Windows está em `TESTE_EM_OUTRAS_MAQUINAS.md`, com scripts em `apoio_homologacao/` e distribuição separada em `Apoio-Homologacao.zip`. Relatórios e evidências de execução ficam na pasta de auditoria local, fora do repositório. O ZIP oficial e os componentes aprovados permanecem idênticos; o apoio não entra na submissão de 03/11. Testes nos PCs dos integrantes e o aceite da legibilidade em página inteira ainda dependem da revisão presencial.
+
 ## Integrantes
 
 Ana Luíza, Mônica, Gabriel, Larissa e Ana Araújo.

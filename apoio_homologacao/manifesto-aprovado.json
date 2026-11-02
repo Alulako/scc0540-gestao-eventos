@@ -1,0 +1,48 @@
+{
+  "arquivo": "Entrega-BD.zip",
+  "nome_local_sem_regra_de_nome_no_pdf": true,
+  "sha256": "cfd7cc4a1a65684ca34d68a1e1cbeafc20bccc3045bc1e88d8a641ff68f9e9c1",
+  "bytes": 281495,
+  "arquivos": [
+    {
+      "nome": "ER.pdf",
+      "bytes": 83169,
+      "sha256": "bd1311a1e6113cf40758f3a09e6c226840216ebf8ec80eadf5b4eee33d5ef148"
+    },
+    {
+      "nome": "ER.xml",
+      "bytes": 68132,
+      "sha256": "3724e74590b30547213dfbefc1c10979d1b62de5aa5000d65752a7cd48d949b3"
+    },
+    {
+      "nome": "Relacional.pdf",
+      "bytes": 483574,
+      "sha256": "f67259f0d1879f397c7f136d9696ff71cab61331e642eedec91e8d066bc45719"
+    },
+    {
+      "nome": "Relacional.mmd",
+      "bytes": 3280,
+      "sha256": "71b4e32c81efdba7d09d3dd6966de50152ce4c195e4cab507a90029e49bc2d54"
+    },
+    {
+      "nome": "Projeto.txt",
+      "bytes": 17671,
+      "sha256": "86fea5eeedf080e1b365bc449da42c6ab9a5964879e2012b2ce269219c4bb3b7"
+    },
+    {
+      "nome": "DML.sql",
+      "bytes": 3955,
+      "sha256": "ba37eee980633b3ab1fc68461acecc1ec396c030c0d2162b298b4792a27cd95f"
+    },
+    {
+      "nome": "Prototipo.zip",
+      "bytes": 3679,
+      "sha256": "7f00ef0e6db024789d28d0bf5e1123aeb3041acaf8faefe0d8eeeeff21e5e6ae"
+    },
+    {
+      "nome": "Instrucoes.txt",
+      "bytes": 2523,
+      "sha256": "647724f5e9784c21a145b56df4dba49e8954cdcbb11b57595494d0127289f184"
+    }
+  ]
+}
